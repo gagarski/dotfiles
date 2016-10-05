@@ -1,0 +1,4 @@
+syntax: glob
+
+.autoenv.zsh
+.autoenv_leave.zsh

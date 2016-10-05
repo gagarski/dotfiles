@@ -1,0 +1,33 @@
+[ui]
+username = Kirill Gagarski <gagarski@kspt.icc.spbstu.ru>
+merge = meld
+diff = meld
+ignore = ~/.hgignore_global
+
+[extensions]
+hgk =
+rebase =
+hgext.extdiff =
+hgext.hbisect=
+hgext.churn=
+hgext.shelve=
+color=
+progress=
+purge=
+propmt=/usr/lib/python2.7/site-packages/hgext/prompt.py
+mq=
+pager=
+
+[auth]
+hglocal.prefix = http://hg.local/
+hglocal.username = gagarski
+hglocal.password = sOCbhQgOzH
+kallithea.prefix = http://kallithea.local/
+kallithea.username = gagarski
+
+[extdiff]
+cmd.meld =
+
+[merge-tools]
+meld.args =  $base $local $other
+
