@@ -8,4 +8,6 @@
 [alias]
 	st = status
 [core]
-	excludesfile = ~/.gitignore_global
+	excludesfile = /home/gagarski/.gitignore_global
+[mergetool "meld"]
+	cmd = GTK_THEME=Adwaita:light meld $BASE $LOCAL $REMOTE

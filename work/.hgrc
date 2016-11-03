@@ -1,7 +1,7 @@
 [ui]
 username = Kirill Gagarski <gagarski@kspt.icc.spbstu.ru>
-merge = meld
-diff = meld
+merge = GTK_THEME=Adwaita:light meld
+diff = GTK_THEME=Adwaita:light meld
 ignore = ~/.hgignore_global
 
 [extensions]
