@@ -14,7 +14,7 @@ hgext.shelve=
 color=
 progress=
 purge=
-propmt=/usr/lib/python2.7/site-packages/hgext/prompt.py
+prompt=/usr/lib/python2.7/site-packages/hgext/prompt.py
 mq=
 pager=
 
