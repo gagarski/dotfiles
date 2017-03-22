@@ -59,7 +59,16 @@ export PATH="$HOME/bin:$PATH"
 
 BULLETTRAIN_PROMPT_SEPARATE_LINE=true
 BULLETTRAIN_CONTEXT_SHOW=true
-
+BULLETTRAIN_PROMPT_ORDER=(
+	time
+	custom
+	status
+	context
+	dir
+	virtualenv
+	git
+	hg
+)
 
 #AUTOENV_FILE_ENTER=.env/.autoenv.zsh
 #AUTOENV_FILE_LEAVE=.env/.autoenv_leave.zsh
