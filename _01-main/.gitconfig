@@ -1,0 +1,5 @@
+[include]
+	path = ~/.gitconfig.d/user.conf
+	path = ~/.gitconfig.d/mergetool.conf
+	path = ~/.gitconfig.d/aliases.conf
+	path = ~/.gitconfig.d/exclude.conf

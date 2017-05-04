@@ -1,0 +1,5 @@
+%include ~/.hgrc.d/auth.conf
+%include ~/.hgrc.d/exclude.conf
+%include ~/.hgrc.d/extensions.conf
+%include ~/.hgrc.d/mergetool.conf
+%include ~/.hgrc.d/user.conf

@@ -1,0 +1,1 @@
+alias meld='GTK_THEME=Adwaita:light meld'
