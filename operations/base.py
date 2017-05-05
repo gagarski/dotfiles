@@ -14,25 +14,35 @@ class Deploy:
     def __init__(self, home=default_home):
         self.home = home
 
+    def log(self):
+        print("Override log() please.")
+
     def run(self):
-        raise NotImplementedError("Override me")
+        raise NotImplementedError("Implement me")
 
 
 class DeployList(Deploy):
     operations = []
     home = default_home
+    propagate_home = False
 
-    def __init__(self, propagate_home=False):
+    def __init__(self):
         super(DeployList, self).__init__(self.home)
-        self.propagate_home = propagate_home
+
+    def get_operations(self):
+        return self.operations
+
+    def log(self):
+        return
 
     def run(self):
-        for op in self.operations:
+        for op in self.get_operations():
             old_home = None
 
             if self.propagate_home:
                 old_home = op.home
-
+                op.home = self.home
+            op.log()
             op.run()
 
             if self.propagate_home:

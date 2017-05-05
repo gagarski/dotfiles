@@ -41,6 +41,14 @@ class DeployGitRepo(Deploy):
         self.exists_policy = exists_policy
         self.perms = perms
 
+    def log(self):
+        print("=" * 80)
+        print(f"Deploying repo {self.repo} into {self.dst} at {self.home}.")
+        print(f"Checking out {self.checkout}")
+        print(f"Policy is {self.exists_policy}.")
+        print(f"Permissions for destination are {oct(self.perms)}")
+        print("=" * 80)
+
     def run(self):
         dst_path = os.path.join(self.home, self.dst)
         if os.path.exists(dst_path):
@@ -69,7 +77,7 @@ class DeployFilesFromGitRepo(Deploy):
                  exists_policy="merge",
                  home=default_home,
                  perms=int("755", 8),
-                 file_list=("*",)):
+                 file_list=("*",".*")):
         super().__init__(home)
         self.repo = repo
         self.dst = dst
@@ -78,13 +86,21 @@ class DeployFilesFromGitRepo(Deploy):
         self.perms = perms
         self.file_list = file_list
 
+    def log(self):
+        print("=" * 80)
+        print(f"Deploying files {self.file_list} from {self.repo} into {self.dst} at {self.home}.")
+        print(f"Checking out {self.checkout}")
+        print(f"Policy is {self.exists_policy}.")
+        print(f"Permissions for temporary destination  are {oct(self.perms)}")
+        print("=" * 80)
+
     def run(self):
         tempdir = tempfile.mkdtemp(prefix="dfd-temp")
         try:
             DeployGitRepo(repo=self.repo,
                           dst=os.path.join(tempdir, "repo"),
                           checkout=self.checkout,
-                          exists_policy="remove",
+                          exists_policy=ExistsPolicy.REMOVE,
                           home=self.home,  # Actually, we do not care here
                           perms=self.perms).run()
             dst_path = os.path.join(self.home, self.dst)

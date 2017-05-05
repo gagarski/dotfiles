@@ -13,6 +13,12 @@ class GenerateGitConfigFromChunks(Deploy):
         self.dst = dst
         self.src = src
 
+    def log(self):
+        print("=" * 80)
+        print(f"Generating {self.dst} at {self.home} from {self.src}")
+        print(f"Policy is {self.exists_policy}.")
+        print("=" * 80)
+
     def run(self):
         src_path = os.path.join(self.home, self.src)
         dst_path = os.path.join(self.home, self.dst)
@@ -42,6 +48,12 @@ class GenerateHgRcFromChunks(Deploy):
         self.exists_policy = exists_policy
         self.dst = dst
         self.src = src
+
+    def log(self):
+        print("=" * 80)
+        print(f"Generating {self.dst} at {self.home} from {self.src}")
+        print(f"Policy is {self.exists_policy}.")
+        print("=" * 80)
 
     def run(self):
         src_path = os.path.join(self.home, self.src)

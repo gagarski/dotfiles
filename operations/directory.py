@@ -12,7 +12,7 @@ from operations.base import Deploy, default_home, ExistsPolicy
 
 
 class DeployDirectory(Deploy):
-    def __init__(self, src, home=default_home, exists_policy=ExistsPolicy.MERGE, file_list=("*",)):
+    def __init__(self, src, home=default_home, exists_policy=ExistsPolicy.MERGE, file_list=("*", ".*")):
         super().__init__(home)
         self.src = src
         self.exists_policy = exists_policy
@@ -37,6 +37,13 @@ class DeployDirectory(Deploy):
             to_create = os.path.join(current_dir, d)
             os.mkdir(to_create, mode)
             current_dir = to_create
+
+    def log(self):
+        print("=" * 80)
+        print(f"Deploying folder {self.src} into {self.home}.")
+        print(f"Policy is {self.exists_policy}.")
+        print(f"Files are {self.file_list}")
+        print("=" * 80)
 
     def run(self):
         if not os.path.exists(self.src):
@@ -69,11 +76,18 @@ class DeployDirectory(Deploy):
 
 
 class DeployDirectoryIfExists(Deploy):
-    def __init__(self, src, home=default_home, exists_policy=ExistsPolicy.MERGE, file_list=("*",)):
+    def __init__(self, src, home=default_home, exists_policy=ExistsPolicy.MERGE, file_list=("*", ".*")):
         super().__init__(home)
         self.src = src
         self.exists_policy = exists_policy
         self.file_list = file_list
+
+    def log(self):
+        print("=" * 80)
+        print(f"Deploying folder {self.src} into {self.home}.")
+        print(f"Policy is {self.exists_policy}.")
+        print(f"Files are {self.file_list}")
+        print("=" * 80)
 
     def run(self):
         if not os.path.exists(self.src):
