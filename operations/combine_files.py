@@ -25,7 +25,9 @@ class GenerateGitConfigFromChunks(Deploy):
 
         with open(dst_path, "w") as gitconfig:
             print("[include]", file=gitconfig)
-            for f in os.listdir(src_path):
+            ls = os.listdir(src_path)
+            ls.sort()
+            for f in ls:
                 home = "~" if self.home == default_home else self.home
                 chunk_path = os.path.join(home, self.src, f)
                 print("\tpath = {}".format(chunk_path), file=gitconfig)
@@ -52,7 +54,9 @@ class GenerateHgRcFromChunks(Deploy):
             raise FileExistsError("{} already exists".format(dst_path))
 
         with open(dst_path, "w") as gitconfig:
-            for f in os.listdir(src_path):
+            ls = os.listdir(src_path)
+            ls.sort()
+            for f in ls:
                 home = "~" if self.home == default_home else self.home
                 chunk_path = os.path.join(home, self.src, f)
                 print("%include {}".format(chunk_path), file=gitconfig)
