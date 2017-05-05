@@ -1,47 +1,20 @@
 #!/usr/bin/env python3
-import argparse
-
 import os
 
-def copy_folder(name, home, base):
-    pass
+from operations import DeployGitRepo
+from operations.combine_files import GenerateGitConfigFromChunks, GenerateHgRcFromChunks
+from operations.directory import DeployDirectory
+from operations.git import DeployFilesFromGitRepo
 
-
-def git_clone_oh_my_zsh(home):
-    pass
-
-
-def git_clone_zsh_autoenv(home):
-    pass
-
-
-def get_clone_bullet
-
+BASE_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "data/test")
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="Deploy dotfiles into home folder")
-    parser.add_argument("-m",
-                        "--home",
-                        dest="home",
-                        type=str,
-                        help="Home folder (default: current user home)",
-                        default=os.path.expanduser("~"))
-    parser.add_argument("-s",
-                        "--src",
-                        dest="src",
-                        type=str,
-                        help="Source folder for dotfiles (default: current folder)",
-                        default=os.getcwd())
-    parser.add_argument("-e",
-                        "--environment",
-                        dest=envs,
-                        type=str,
-                        nargs="*",
-                        help="Environments (subfolders) to load")
-    parser.add_argument("-n",
-                        "--no-default",
-                        dest="default",
-                        action="store_false"
-                        )
-
-
+    # DeployGitRepo(repo="git@github.com:gagarski/bullet-train-oh-my-zsh-theme.git",
+    #               dst="tmp/shittyshit").run()
+    # DeployDirectory(BASE_DIR, file_list=("test/sss/*.html",)).run()
+    # DeployFilesFromGitRepo(repo="https://github.com/gagarski/bullet-train-oh-my-zsh-theme.git",
+    #                        dst="tmp/shittyshit",
+    #                        file_list=("bullet-train.zsh-theme",)
+    #                        ).run()
+    GenerateGitConfigFromChunks(dst="fake_git_config").run()
+    GenerateHgRcFromChunks(dst="fake_hg_rc").run()
