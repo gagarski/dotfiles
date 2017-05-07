@@ -15,6 +15,7 @@ class Operation(DeployList):
         ),
         DeployFilesFromGitRepo(
             repo="https://github.com/gagarski/bullet-train-oh-my-zsh-theme.git",
+            checkout="my-version",
             dst=".oh-my-zsh/custom",
             file_list=("bullet-train.zsh-theme",)
         ),
