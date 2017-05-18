@@ -1,0 +1,19 @@
+#!/usr/bin/bash
+
+set -e
+
+branch_name="fire_"
+branch_name+=${USER}
+branch_name+="_on_"
+branch_name+=${HOSTNAME}
+branch_name+="_at_"
+branch_name+=$(date -Iseconds | tr T _ | tr : - | cut -f1 -d+)
+
+git checkout -b ${branch_name}
+git add -A
+git commit -m 'FIRE! Run for your life!'
+
+echo $branch_name
+for r in $(git remote); do
+	git push $r $branch_name
+done
