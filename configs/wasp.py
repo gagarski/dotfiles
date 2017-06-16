@@ -5,6 +5,7 @@ from operations.base import DeployList
 from operations.combine_files import GenerateGitConfigFromChunks, GenerateHgRcFromChunks
 from operations.directory import DeployDirectory, DeployDirectoryIfExists
 from operations.git import DeployGitRepo, DeployFilesFromGitRepo
+from operations.hg import DeployHgRepo
 
 
 class Operation(DeployList):
@@ -19,6 +20,10 @@ class Operation(DeployList):
             checkout="my-version",
             dst=".oh-my-zsh/custom",
             file_list=("bullet-train.zsh-theme",)
+        ),
+        DeployHgRepo(
+            repo="http://bitbucket.org/sjl/hg-prompt/",
+            dst=".hg_ext/hg-prompt"
         ),
         DeployDirectory(from_data("main")),
         DeployDirectory(from_data("home")),
