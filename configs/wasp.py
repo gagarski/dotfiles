@@ -22,7 +22,7 @@ class Operation(DeployList):
             file_list=("bullet-train.zsh-theme",)
         ),
         DeployHgRepo(
-            repo="http://bitbucket.org/sjl/hg-prompt/",
+            repo="https://bitbucket.org/sjl/hg-prompt/",
             dst=".hg_ext/hg-prompt"
         ),
         DeployDirectory(from_data("main")),

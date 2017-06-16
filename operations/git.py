@@ -1,11 +1,7 @@
 import os
-import tempfile
 
-from shutil import rmtree
-from operations.base import Deploy, default_home, ExistsPolicy
+from operations.base import default_home, ExistsPolicy
 from operations.vcs import DeployVcsRepo, DeployFilesFromVcsRepo
-
-from .directory import DeployDirectory
 
 
 class GitException(Exception):

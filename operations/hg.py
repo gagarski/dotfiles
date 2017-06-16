@@ -1,12 +1,7 @@
 import os
-import tempfile
-
-from shutil import rmtree
 
 from operations import DeployVcsRepo, DeployFilesFromVcsRepo
-from operations.base import Deploy, default_home, ExistsPolicy
-
-from .directory import DeployDirectory
+from operations.base import default_home, ExistsPolicy
 
 
 class HgException(Exception):
