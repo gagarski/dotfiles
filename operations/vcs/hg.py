@@ -1,6 +1,6 @@
 import os
 
-from operations import DeployVcsRepo, DeployFilesFromVcsRepo
+from operations.vcs.base import DeployVcsRepo, DeployFilesFromVcsRepo
 from operations.base import default_home, ExistsPolicy
 
 

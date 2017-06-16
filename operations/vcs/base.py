@@ -4,7 +4,7 @@ import tempfile
 from shutil import rmtree
 from operations.base import Deploy, default_home, ExistsPolicy
 
-from .directory import DeployDirectory
+from operations.directory import DeployDirectory
 
 
 class DeployVcsRepo(Deploy):

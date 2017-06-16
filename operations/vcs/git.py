@@ -1,7 +1,7 @@
 import os
 
 from operations.base import default_home, ExistsPolicy
-from operations.vcs import DeployVcsRepo, DeployFilesFromVcsRepo
+from operations.vcs.base import DeployVcsRepo, DeployFilesFromVcsRepo
 
 
 class GitException(Exception):
