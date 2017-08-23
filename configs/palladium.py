@@ -1,10 +1,8 @@
-import os
-
 from configs.util import from_data
 from operations.base import DeployList
 from operations.combine_files import GenerateGitConfigFromChunks, GenerateHgRcFromChunks
 from operations.directory import DeployDirectory, DeployDirectoryIfExists
-from operations.git import DeployGitRepo, DeployFilesFromGitRepo
+from operations.vcs.git import DeployGitRepo, DeployFilesFromGitRepo
 
 
 class Operation(DeployList):

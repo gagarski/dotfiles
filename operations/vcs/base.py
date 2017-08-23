@@ -4,32 +4,13 @@ import tempfile
 from shutil import rmtree
 from operations.base import Deploy, default_home, ExistsPolicy
 
-from .directory import DeployDirectory
+from operations.directory import DeployDirectory
 
 
-class GitException(Exception):
-    def __init__(self, op, ret):
-        super().__init__("""Operation "git {}" failed with code {}""".format(op, ret))
-
-
-def _git(op, repo_path=None):
-    if repo_path:
-        return os.system("git -C {} {}".format(repo_path, op))
-    else:
-        return os.system("git {}".format(op))
-
-
-def _git_or_raise(op, repo_path=None):
-    ret = _git(op, repo_path)
-    if ret != 0:
-        raise GitException(op, ret)
-
-
-class DeployGitRepo(Deploy):
+class DeployVcsRepo(Deploy):
     def __init__(self,
                  repo,
                  dst,
-                 checkout="master",
                  exists_policy=ExistsPolicy.MERGE,
                  home=default_home,
                  perms=int("755", 8)):
@@ -37,16 +18,31 @@ class DeployGitRepo(Deploy):
         super().__init__(home)
         self.repo = repo
         self.dst = dst
-        self.checkout = checkout
         self.exists_policy = exists_policy
         self.perms = perms
 
+    @property
+    def vcs_name(self):
+        raise NotImplementedError("Implement me in subclasses")
+
+    def update_existing(self, path):
+        raise NotImplementedError("Implement me in subclasses")
+
+    def clone(self, path):
+        raise NotImplementedError("Implement me in subclasses")
+
+    def vcs_log(self):
+        pass
+
+    def is_path_repo(self, path):
+        raise NotImplementedError("Implement me in subclasses")
+
     def log(self):
         print("=" * 80)
-        print(f"Deploying repo {self.repo} into {self.dst} at {self.home}.")
-        print(f"Checking out {self.checkout}")
+        print(f"Deploying {self.vcs_name} repo {self.repo} into {self.dst} at {self.home}.")
         print(f"Policy is {self.exists_policy}.")
         print(f"Permissions for destination are {oct(self.perms)}")
+        self.vcs_log()
         print("=" * 80)
 
     def run(self):
@@ -58,51 +54,48 @@ class DeployGitRepo(Deploy):
                 rmtree(dst_path)
             elif self.exists_policy == ExistsPolicy.REMOVE:
                 os.remove(dst_path)
-            elif self.exists_policy == ExistsPolicy.MERGE and not os.path.exists(os.path.join(dst_path, ".git")):
-                raise FileExistsError("File or directory {} exists and it's not a git repo".format(dst_path))
+            elif self.exists_policy == ExistsPolicy.MERGE and not self.is_path_repo(dst_path):
+                raise FileExistsError(f"File or directory {dst_path} exists and it's not a {self.vcs_name} repo")
             else:
-                _git_or_raise("checkout {}".format(self.checkout), dst_path)
-                _git_or_raise("pull --ff-only", dst_path)
+                self.update_existing(dst_path)
         else:
             os.makedirs(dst_path, self.perms)
-            _git_or_raise("clone {} {}".format(self.repo, dst_path))
-            _git_or_raise("checkout {}".format(self.checkout), dst_path)
+            self.clone(dst_path)
 
 
-class DeployFilesFromGitRepo(Deploy):
+class DeployFilesFromVcsRepo(Deploy):
     def __init__(self,
                  repo,
                  dst,
-                 checkout="master",
-                 exists_policy="merge",
+                 exists_policy=ExistsPolicy.MERGE,
                  home=default_home,
                  perms=int("755", 8),
-                 file_list=("*",".*")):
+                 file_list=("*", ".*")):
         super().__init__(home)
         self.repo = repo
         self.dst = dst
-        self.checkout = checkout
         self.exists_policy = exists_policy
         self.perms = perms
         self.file_list = file_list
 
+    def vcs_log(self):
+        pass
+
     def log(self):
         print("=" * 80)
         print(f"Deploying files {self.file_list} from {self.repo} into {self.dst} at {self.home}.")
-        print(f"Checking out {self.checkout}")
         print(f"Policy is {self.exists_policy}.")
         print(f"Permissions for temporary destination  are {oct(self.perms)}")
+        self.vcs_log()
         print("=" * 80)
+
+    def vcs_operation(self, dst):
+        raise NotImplementedError("Implement me in subclasses")
 
     def run(self):
         tempdir = tempfile.mkdtemp(prefix="dfd-temp")
         try:
-            DeployGitRepo(repo=self.repo,
-                          dst=os.path.join(tempdir, "repo"),
-                          checkout=self.checkout,
-                          exists_policy=ExistsPolicy.REMOVE,
-                          home=self.home,  # Actually, we do not care here
-                          perms=self.perms).run()
+            self.vcs_operation(os.path.join(tempdir, "repo")).run()
             dst_path = os.path.join(self.home, self.dst)
             os.makedirs(dst_path, self.perms, exist_ok=True)
             DeployDirectory(src=os.path.join(tempdir, "repo"),
