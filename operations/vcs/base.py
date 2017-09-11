@@ -95,7 +95,7 @@ class DeployFilesFromVcsRepo(Deploy):
     def run(self):
         tempdir = tempfile.mkdtemp(prefix="dfd-temp")
         try:
-            self.vcs_operation(os.path.join(tempdir, "repo")).run()
+            self.vcs_operation(tempdir).run()
             dst_path = os.path.join(self.home, self.dst)
             os.makedirs(dst_path, self.perms, exist_ok=True)
             DeployDirectory(src=os.path.join(tempdir, "repo"),

@@ -11,6 +11,10 @@ class Operation(DeployList):
             repo="https://github.com/robbyrussell/oh-my-zsh.git",
             dst=".oh-my-zsh",
         ),
+        DeployGitRepo(
+            repo="https://github.com/Tarrasch/zsh-autoenv",
+            dst=".dotfiles/lib/zsh-autoenv",
+        ),
         DeployFilesFromGitRepo(
             repo="https://github.com/gagarski/bullet-train-oh-my-zsh-theme.git",
             checkout="my-version",
