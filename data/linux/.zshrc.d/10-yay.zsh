@@ -1,0 +1,1 @@
+alias yay='PKGEXT=.tar BUILDDIR="/tmp/yay-tmp-${USER}" AURDEST="/tmp/yay-tmp-${USER}" yay'
