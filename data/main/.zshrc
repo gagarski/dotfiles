@@ -67,7 +67,7 @@ BULLETTRAIN_PROMPT_ORDER=(
 	dir
 	virtualenv
 	git
-	hg
+#	hg
 )
 
 #AUTOENV_FILE_ENTER=.env/.autoenv.zsh
