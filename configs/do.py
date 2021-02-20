@@ -6,6 +6,7 @@ from operations.vcs.git import DeployGitRepo, DeployFilesFromGitRepo
 
 
 class Operation(DeployList):
+
     operations = [
         DeployGitRepo(
             repo="https://github.com/robbyrussell/oh-my-zsh.git",
@@ -22,9 +23,8 @@ class Operation(DeployList):
             file_list=("bullet-train.zsh-theme",)
         ),
         DeployDirectory(from_data("main")),
-        DeployDirectory(from_data("work")),
+        DeployDirectory(from_data("home")),
         DeployDirectory(from_data("linux")),
-        DeployDirectory(from_data("polyana")),
         DeployDirectoryIfExists(from_data("private")),
         GenerateGitConfigFromChunks(),
         GenerateHgRcFromChunks()

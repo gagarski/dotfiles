@@ -1,1 +1,0 @@
-alias pacaur='PKGEXT=.tar BUILDDIR="/tmp/pacaur-tmp-${USER}" AURDEST="/tmp/pacaur-tmp-${USER}" pacaur'

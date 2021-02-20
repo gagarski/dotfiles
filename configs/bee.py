@@ -25,6 +25,7 @@ class Operation(DeployList):
         DeployDirectory(from_data("main")),
         DeployDirectory(from_data("home")),
         DeployDirectory(from_data("linux")),
+        DeployDirectory(from_data("linux-yay-tmp")),
         DeployDirectoryIfExists(from_data("private")),
         GenerateGitConfigFromChunks(),
         GenerateHgRcFromChunks()
