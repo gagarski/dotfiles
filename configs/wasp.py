@@ -24,14 +24,9 @@ class Operation(DeployList):
             dst=".oh-my-zsh/custom",
             file_list=("bullet-train.zsh-theme",)
         ),
-        DeployHgRepo(
-            repo="https://bitbucket.org/sjl/hg-prompt/",
-            dst=".hg_ext/hg-prompt"
-        ),
         DeployDirectory(from_data("main")),
         DeployDirectory(from_data("home")),
         DeployDirectory(from_data("macos")),
         DeployDirectoryIfExists(from_data("private")),
         GenerateGitConfigFromChunks(),
-        GenerateHgRcFromChunks()
     ]
